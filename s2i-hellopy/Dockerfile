@@ -2,20 +2,20 @@
 FROM openshift/base-centos7
 
 # TODO: Put the maintainer name in the image metadata
-# LABEL maintainer="Your Name <your@email.com>"
+ LABEL maintainer="Amanuel Demissew <amanuel.dem@gmail.com>"
 
 # TODO: Rename the builder environment variable to inform users about application you provide them
-# ENV BUILDER_VERSION 1.0
+ ENV    Python=3.8
 
 # TODO: Set labels used in OpenShift to describe the builder image
-#LABEL io.k8s.description="Platform for building xyz" \
-#      io.k8s.display-name="builder x.y.z" \
-#      io.openshift.expose-services="8080:http" \
-#      io.openshift.tags="builder,x.y.z,etc."
+ LABEL io.k8s.description="Platform for building python app" \
+       io.k8s.display-name="builder hellopy" \
+       io.openshift.expose-services="8080:http" \
+       io.openshift.tags="builder,python,hellopy"
 
 # TODO: Install required packages here:
 # RUN yum install -y ... && yum clean all -y
-RUN yum install -y rubygems && yum clean all -y
+RUN yum install -y rubygems python3 && yum clean all -y 
 RUN gem install asdf
 
 # TODO (optional): Copy the builder files into /opt/app-root
@@ -26,13 +26,13 @@ RUN gem install asdf
 COPY ./s2i/bin/ /usr/libexec/s2i
 
 # TODO: Drop the root user and make the content of /opt/app-root owned by user 1001
-# RUN chown -R 1001:1001 /opt/app-root
+ RUN chown -R 1001:1001 /opt/app-root
 
 # This default user is created in the openshift/base-centos7 image
 USER 1001
 
 # TODO: Set the default port for applications built using this image
-# EXPOSE 8080
+ EXPOSE 8080
 
 # TODO: Set the default CMD for the image
-# CMD ["/usr/libexec/s2i/usage"]
+ CMD ["/usr/libexec/s2i/usage"]
