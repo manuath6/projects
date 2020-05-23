@@ -1,4 +1,4 @@
-#!/Library/Frameworks/Python.framework/Versions/3.8/bin/python3
+#!/usr/bin/env python3
 # This program says hello and asks for my name
 
 print ('Hello World!')
